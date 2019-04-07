@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="BowlingClasses.UI.Views.CaseJeu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Width="80" Height="90">
+    <Border BorderThickness="2" BorderBrush="Black">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                
+                <!-- Premier essai. -->
+                <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black">
+                    <TextBlock Text="{Binding Path=Essais[0], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+                
+                <!-- Deuxième essai. -->
+                <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black">
+                    <TextBlock Text="{Binding Path=Essais[1], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+            </Grid>
+
+            <!-- Score à ce point de la partie. -->
+            <TextBlock Grid.Row="1" Text="{Binding Path=Score, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,2,2" FontSize="20" />
+        </Grid>
+    </Border>
+</UserControl>
