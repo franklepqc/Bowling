@@ -6,22 +6,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Views\CaseJeu.xaml" />
-    <None Remove="Views\PartieJoueur.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BowlingClasses.Core\BowlingClasses.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Views\CaseJeu.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\PartieJoueur.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
 </Project>
