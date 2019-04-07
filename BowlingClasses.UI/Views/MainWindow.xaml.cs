@@ -1,4 +1,5 @@
-﻿using BowlingClasses.UI.ViewModels;
+﻿using BowlingClasses.Core;
+using BowlingClasses.UI.ViewModels;
 
 namespace BowlingClasses.UI.Views
 {
@@ -11,7 +12,8 @@ namespace BowlingClasses.UI.Views
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(null);
+            DataContext = new MainWindowViewModel(
+                new ServiceCreationPartie());
         }
     }
 }

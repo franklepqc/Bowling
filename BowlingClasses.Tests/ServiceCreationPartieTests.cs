@@ -20,6 +20,7 @@ namespace BowlingClasses.Tests
         [ClassInitialize]
         public static void Initialiser(TestContext testContext)
         {
+            _service = new ServiceCreationPartie();
         }
 
         [TestMethod]

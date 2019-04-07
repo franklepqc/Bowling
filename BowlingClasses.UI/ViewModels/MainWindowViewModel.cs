@@ -32,18 +32,18 @@ namespace BowlingClasses.UI.ViewModels
             // Assignation des objets injectés.
             _serviceCreationPartie = serviceCreationPartie;
 
-            InitialiserAsync(6);
+            InitialiserAsync();
         }
 
         /// <summary>
         /// Initialiser les cases.
         /// </summary>
         /// <returns>Cases.</returns>
-        private Task InitialiserAsync(int nombreJoueurs) => Task.Run(() =>
+        private Task InitialiserAsync() => Task.Run(() =>
         {
             // Réinitialiser.
             _partie = null;
-            _partie = _serviceCreationPartie.Creer(nombreJoueurs);
+            _partie = _serviceCreationPartie.Creer(6);
 
             // Réinitialiser.
             PartieJoueurs.Clear();
