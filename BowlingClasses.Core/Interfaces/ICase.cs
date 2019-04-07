@@ -4,6 +4,6 @@
     {
         int?[] Essais { get; }
 
-        int? Score { get; }
+        int? Score { get; set; }
     }
 }

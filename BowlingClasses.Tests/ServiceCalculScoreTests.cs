@@ -44,7 +44,7 @@ namespace BowlingClasses.Tests
             var attendu = 100;
 
             // Actuel.
-            var actuel = _service.CalculerAsync(lancers).Result;
+            var actuel = _service.Calculer(lancers);
 
             // Assertion.
             Assert.AreEqual(attendu, actuel);
@@ -72,7 +72,7 @@ namespace BowlingClasses.Tests
             var attendu = 300;
 
             // Actuel.
-            var actuel = _service.CalculerAsync(lancers).Result;
+            var actuel = _service.Calculer(lancers);
 
             // Assertion.
             Assert.AreEqual(attendu, actuel);

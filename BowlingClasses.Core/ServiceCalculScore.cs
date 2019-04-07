@@ -7,7 +7,7 @@ namespace BowlingClasses.Core
 {
     public class ServiceCalculScore : IServiceCalculScore
     {
-        public Task<int> CalculerAsync(int[] lancers) => Task.Run(() =>
+        public int Calculer(int[] lancers)
         {
             // Variables de travail.
             int somme = 0;
@@ -43,7 +43,7 @@ namespace BowlingClasses.Core
             }
 
             return somme;
-        });
+        }
 
         private int ObtenirLancer(int[] lancers, int index) =>
             (lancers.Length <= index ? 0 : lancers[index]);

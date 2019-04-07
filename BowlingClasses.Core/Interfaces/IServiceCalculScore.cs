@@ -4,6 +4,6 @@ namespace BowlingClasses.Core.Interfaces
 {
     public interface IServiceCalculScore
     {
-        Task<int> CalculerAsync(int[] lancers);
+        int Calculer(int[] lancers);
     }
 }

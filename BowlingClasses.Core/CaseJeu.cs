@@ -19,6 +19,6 @@
         /// <summary>
         /// Score de la case.
         /// </summary>
-        public int? Score { get; private set; }
+        public int? Score { get; set; }
     }
 }

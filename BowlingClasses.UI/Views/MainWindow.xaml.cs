@@ -13,7 +13,8 @@ namespace BowlingClasses.UI.Views
             InitializeComponent();
 
             DataContext = new MainWindowViewModel(
-                new ServiceCreationPartie());
+                new ServiceCreationPartie(),
+                new ServiceCalculScore());
         }
     }
 }

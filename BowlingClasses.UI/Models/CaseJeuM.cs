@@ -1,9 +1,10 @@
 ﻿using BowlingClasses.Core.Interfaces;
+using Prism.Mvvm;
 using System.Linq;
 
 namespace BowlingClasses.UI.Models
 {
-    public class CaseJeuM
+    public class CaseJeuM : BindableBase
     {
         /// <summary>
         /// Case de jeu (données).
@@ -18,7 +19,15 @@ namespace BowlingClasses.UI.Models
         /// <summary>
         /// Score à afficher.
         /// </summary>
-        public int? Score => _caseJeu.Score;
+        public int? Score
+        {
+            get => _caseJeu.Score;
+            set
+            {
+                _caseJeu.Score = value.Value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Détermine si c'est le dixième carreau.
@@ -36,6 +45,14 @@ namespace BowlingClasses.UI.Models
 
             // Initialiser le nombre de carreaux.
             EstDixiemeCarreau = _caseJeu.Essais.Count() == 3;
+        }
+
+        /// <summary>
+        /// Signaler à l'interface que les essais ont changé.
+        /// </summary>
+        public void SignalerChangement()
+        {
+            RaisePropertyChanged(nameof(Essais));
         }
     }
 }

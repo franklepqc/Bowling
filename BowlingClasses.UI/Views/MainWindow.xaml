@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding Path=Equipe.Nom, Mode=OneWay}" />
@@ -48,7 +49,7 @@
             <TextBlock Grid.Row="0" Grid.Column="10" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">10</TextBlock>
 
             <!-- Grille de jeu. -->
-            <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" ItemsSource="{Binding Path=PartieJoueurs}">
+            <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="11" ItemsSource="{Binding Path=PartieJoueurs}" Name="lboxPJ">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" />
@@ -61,5 +62,10 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <TextBox Text="{Binding Path=Lancer}" Width="200" />
+            <Button Command="{Binding Path=CommandeAjouterLancer}" CommandParameter="{Binding Path=SelectedItem, ElementName=lboxPJ, Mode=OneWay}" Content="Ajouter" />
+        </StackPanel>
     </Grid>
 </Window>
