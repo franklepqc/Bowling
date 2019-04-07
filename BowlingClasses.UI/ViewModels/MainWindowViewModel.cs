@@ -1,4 +1,5 @@
-﻿using BowlingClasses.Core.Interfaces;
+﻿using BowlingClasses.Core;
+using BowlingClasses.Core.Interfaces;
 using BowlingClasses.UI.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -37,28 +38,6 @@ namespace BowlingClasses.UI.ViewModels
             PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 5"), new CasesJeu()));
             PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 6"), new CasesJeu()));
         });
-    }
-
-    public class Joueur : IJoueur
-    {
-        public Joueur(string nom)
-        {
-            Nom = nom;
-        }
-
-        public string Nom { get; set; }
-    }
-
-    public class CaseJeu : ICase
-    {
-        public CaseJeu(int nombreEssais)
-        {
-            Essais = new int?[nombreEssais];
-        }
-
-        public int?[] Essais { get; private set; }
-
-        public int? Score { get; }
     }
 
     public class CasesJeu : Collection<ICase>

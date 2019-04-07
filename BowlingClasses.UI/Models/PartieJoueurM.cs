@@ -8,13 +8,6 @@ namespace BowlingClasses.UI.Models
     public class PartieJoueurM
     {
         /// <summary>
-        /// Indexs pour les calculs.
-        /// </summary>
-        private int _indexEssai = 1;
-        private int _indexCase = 1;
-        private int _indexScoreCase = 1;
-
-        /// <summary>
         /// Joueur.
         /// </summary>
         private readonly IJoueur _joueur;
