@@ -11,7 +11,7 @@ namespace BowlingClasses.UI.Views
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel(null);
         }
     }
 }

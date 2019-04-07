@@ -1,13 +1,23 @@
-﻿using BowlingClasses.Core;
-using BowlingClasses.Core.Interfaces;
+﻿using BowlingClasses.Core.Interfaces;
 using BowlingClasses.UI.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BowlingClasses.UI.ViewModels
 {
     public class MainWindowViewModel
     {
+        /// <summary>
+        /// Service de création d'une partie.
+        /// </summary>
+        private readonly IServiceCreationPartie _serviceCreationPartie;
+
+        /// <summary>
+        /// Partie en cours.
+        /// </summary>
+        private IPartie _partie;
+
         /// <summary>
         /// Liste des cases de jeu.
         /// </summary>
@@ -16,36 +26,35 @@ namespace BowlingClasses.UI.ViewModels
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
-        public MainWindowViewModel()
+        /// <param name="serviceCreationPartie">Service de création d'une partie.</param>
+        public MainWindowViewModel(IServiceCreationPartie serviceCreationPartie)
         {
-            InitialiserAsync();
+            // Assignation des objets injectés.
+            _serviceCreationPartie = serviceCreationPartie;
+
+            InitialiserAsync(6);
         }
 
         /// <summary>
         /// Initialiser les cases.
         /// </summary>
         /// <returns>Cases.</returns>
-        private Task InitialiserAsync() => Task.Run(() =>
+        private Task InitialiserAsync(int nombreJoueurs) => Task.Run(() =>
         {
+            // Réinitialiser.
+            _partie = null;
+            _partie = _serviceCreationPartie.Creer(nombreJoueurs);
+
             // Réinitialiser.
             PartieJoueurs.Clear();
 
             // Ajouter.
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 1"), new CasesJeu()));
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 2"), new CasesJeu()));
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 3"), new CasesJeu()));
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 4"), new CasesJeu()));
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 5"), new CasesJeu()));
-            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 6"), new CasesJeu()));
+            _partie.Equipe.Joueurs
+                .ToList()
+                .ForEach(joueur =>
+                {
+                    PartieJoueurs.Add(new PartieJoueurM(joueur, _partie.Cases));
+                });
         });
-    }
-
-    public class CasesJeu : Collection<ICase>
-    {
-        public CasesJeu()
-        {
-            for (int i = 0; i < 9; i++) Add(new CaseJeu(2));
-            Add(new CaseJeu(3));
-        }
     }
 }

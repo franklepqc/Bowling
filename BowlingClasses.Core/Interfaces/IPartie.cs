@@ -8,10 +8,6 @@
 
         int NoCaseCourante { get; }
 
-        int ObtenirScore();
-
         bool AjouterLancer(int lancer);
-
-        void AjouterLancers(params int[] lancers);
     }
 }
