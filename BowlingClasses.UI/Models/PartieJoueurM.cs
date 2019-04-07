@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using BowlingClasses.Core.Interfaces;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BowlingClasses.UI.Models
 {
@@ -12,9 +15,14 @@ namespace BowlingClasses.UI.Models
         private int _indexScoreCase = 1;
 
         /// <summary>
+        /// Joueur.
+        /// </summary>
+        private readonly IJoueur _joueur;
+
+        /// <summary>
         /// Nom du joueur.
         /// </summary>
-        public string Nom { get; set; }
+        public string Nom => _joueur.Nom;
 
         /// <summary>
         /// Cases du jeu.
@@ -24,10 +32,12 @@ namespace BowlingClasses.UI.Models
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
-        public PartieJoueurM()
+        public PartieJoueurM(IJoueur joueur, IEnumerable<ICase> casesJeu)
         {
-            // Initialisation des cases.
-            for (int i = 0; i < 10; i++) CasesJeu.Add(new CaseJeuM((i == 9)));
+            // Initialisation.
+            _joueur = joueur;
+            casesJeu.ToList()
+                .ForEach(caseJeu => CasesJeu.Add(new CaseJeuM(caseJeu)));
         }
     }
 }

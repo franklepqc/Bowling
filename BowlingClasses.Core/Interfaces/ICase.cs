@@ -2,6 +2,8 @@
 {
     public interface ICase
     {
-        int[] Essais { get; }
+        int?[] Essais { get; }
+
+        int? Score { get; }
     }
 }

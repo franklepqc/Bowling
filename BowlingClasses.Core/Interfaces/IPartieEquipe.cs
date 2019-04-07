@@ -1,6 +1,6 @@
 ﻿namespace BowlingClasses.Core.Interfaces
 {
-    interface IPartieEquipe
+    public interface IPartieEquipe
     {
         IEquipe Equipe { get; }
 

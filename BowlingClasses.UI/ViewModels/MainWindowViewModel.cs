@@ -1,4 +1,5 @@
-﻿using BowlingClasses.UI.Models;
+﻿using BowlingClasses.Core.Interfaces;
+using BowlingClasses.UI.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -29,12 +30,43 @@ namespace BowlingClasses.UI.ViewModels
             PartieJoueurs.Clear();
 
             // Ajouter.
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur1" });
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur2" });
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur3" });
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur4" });
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur5" });
-            PartieJoueurs.Add(new PartieJoueurM { Nom = "Joueur6" });
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 1"), new CasesJeu()));
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 2"), new CasesJeu()));
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 3"), new CasesJeu()));
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 4"), new CasesJeu()));
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 5"), new CasesJeu()));
+            PartieJoueurs.Add(new PartieJoueurM(new Joueur("Joueur 6"), new CasesJeu()));
         });
+    }
+
+    public class Joueur : IJoueur
+    {
+        public Joueur(string nom)
+        {
+            Nom = nom;
+        }
+
+        public string Nom { get; set; }
+    }
+
+    public class CaseJeu : ICase
+    {
+        public CaseJeu(int nombreEssais)
+        {
+            Essais = new int?[nombreEssais];
+        }
+
+        public int?[] Essais { get; private set; }
+
+        public int? Score { get; }
+    }
+
+    public class CasesJeu : Collection<ICase>
+    {
+        public CasesJeu()
+        {
+            for (int i = 0; i < 9; i++) Add(new CaseJeu(2));
+            Add(new CaseJeu(3));
+        }
     }
 }
