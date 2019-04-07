@@ -103,14 +103,15 @@ namespace BowlingClasses.UI.ViewModels
                     .ForEach((caseJeu) => {
                         caseJeu.SignalerChangement();
 
+                        // Calculer le score en cours.
                         caseJeu.Score = _serviceCalculScore.Calculer(
                             partieJoueur.CasesJeu
-                            .Take(System.Math.Min(10, partieJoueur.CasesJeu.IndexOf(caseJeu) + 3))
                             .SelectMany(k => 
                                 k.Essais
                                     .Where(p => p.HasValue)
                                     .Select(k => k.Value))
-                            .ToArray());
+                            .ToArray(),
+                            System.Math.Min(10, partieJoueur.CasesJeu.IndexOf(caseJeu) + 1));
                     });
             }
         }

@@ -7,13 +7,13 @@ namespace BowlingClasses.Core
 {
     public class ServiceCalculScore : IServiceCalculScore
     {
-        public int Calculer(int[] lancers)
+        public int Calculer(int[] lancers, int noCaseCourante = 10)
         {
             // Variables de travail.
             int somme = 0;
             int noCase = 1;
 
-            for (int index = 0; index < lancers.Length && noCase <= 10; index++)
+            for (int index = 0; index < lancers.Length && noCase <= noCaseCourante; index++)
             {
                 var lancer = ObtenirLancer(lancers, index);
 
