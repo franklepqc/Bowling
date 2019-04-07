@@ -16,6 +16,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 
                 <!-- Premier essai. -->
@@ -26,6 +27,18 @@
                 <!-- Deuxième essai. -->
                 <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black">
                     <TextBlock Text="{Binding Path=Essais[1], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Border>
+
+                <!-- Troisième essai. -->
+                <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black" Width="20">
+                    <Border.Visibility>
+                        <Binding Path="EstDixiemeCarreau" Mode="OneWay">
+                            <Binding.Converter>
+                                <BooleanToVisibilityConverter />
+                            </Binding.Converter>
+                        </Binding>
+                    </Border.Visibility>
+                    <TextBlock Text="{Binding Path=Essais[2], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
             </Grid>
 
