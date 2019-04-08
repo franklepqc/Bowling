@@ -55,6 +55,11 @@ namespace BowlingClasses.Core
                     {
                         lancer -= essais[0].Value;
                     }
+                    // On a voulu jouer au fin fineau!
+                    else if ((lancer + essais[0].Value) > 10)
+                    {
+                        return false;
+                    }
 
                     essais[1] = lancer;
 
