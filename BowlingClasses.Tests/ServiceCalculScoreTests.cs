@@ -53,6 +53,35 @@ namespace BowlingClasses.Tests
 
         [TestCategory(@"Service de calcul de score")]
         [TestMethod]
+        public void CalculerScore_Succes50Points()
+        {
+            // Variables de travail.
+            var lancers = new[]
+            {
+                0, 10,     // Case 1.
+                0, 10,     // Case 2.
+                0, 10,     // Case 3.
+                0, 10,     // Case 4.
+                0, 10,     // Case 5.
+                0, 10,     // Case 6.
+                0, 10,     // Case 7.
+                0, 10,     // Case 8.
+                0, 10,     // Case 9.
+                0, 10, 0   // Case 10.
+            };
+
+            // Attendu.
+            var attendu = 50;
+
+            // Actuel.
+            var actuel = _service.Calculer(lancers, 5);
+
+            // Assertion.
+            Assert.AreEqual(attendu, actuel);
+        }
+
+        [TestCategory(@"Service de calcul de score")]
+        [TestMethod]
         public void CalculerScore_SuccesPartieParfaite()
         {
             // Variables de travail.
