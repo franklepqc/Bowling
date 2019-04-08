@@ -1,7 +1,4 @@
-﻿using BowlingClasses.Core;
-using BowlingClasses.UI.ViewModels;
-
-namespace BowlingClasses.UI.Views
+﻿namespace BowlingClasses.UI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -11,10 +8,6 @@ namespace BowlingClasses.UI.Views
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainWindowViewModel(
-                new ServiceCreationPartie(),
-                new ServiceCalculScore());
         }
     }
 }

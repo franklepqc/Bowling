@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controles="clr-namespace:BowlingClasses.UI.Views"
+        xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Quilles" Height="780" Width="1140">
+        Title="Quilles" Height="780" Width="1140"
+        prism:ViewModelLocator.AutoWireViewModel="True">
     <Window.InputBindings>
         <KeyBinding Key="NumPad0" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="0" />
         <KeyBinding Key="NumPad1" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="1" />
