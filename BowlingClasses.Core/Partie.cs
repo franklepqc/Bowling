@@ -51,14 +51,17 @@ namespace BowlingClasses.Core
                 else if (!essais[1].HasValue)
                 {
                     // Réserve, calcul automatisé.
-                    if (lancer == 10)
+                    if (indexCase < 9)
                     {
-                        lancer -= essais[0].Value;
-                    }
-                    // On a voulu jouer au fin fineau!
-                    else if ((lancer + essais[0].Value) > 10)
-                    {
-                        return false;
+                        if (lancer == 10)
+                        {
+                            lancer -= essais[0].Value;
+                        }
+                        // On a voulu jouer au fin fineau!
+                        else if ((lancer + essais[0].Value) > 10)
+                        {
+                            return false;
+                        }
                     }
 
                     essais[1] = lancer;
