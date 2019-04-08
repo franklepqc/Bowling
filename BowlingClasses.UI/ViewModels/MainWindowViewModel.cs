@@ -76,11 +76,13 @@ namespace BowlingClasses.UI.ViewModels
         {
             // Variables de travail.
             var lancer = System.Convert.ToInt32(lancerStr);
+            var noCase = _partie.IndexCase + 1;
             var partieJoueur = PartieJoueurs[_partie.IndexJoueur];
 
             if (_partie.AjouterLancer(lancer))
             {
                 partieJoueur.CasesJeu
+                    .Take(noCase)
                     .ToList()
                     .ForEach((caseJeu) =>
                     {

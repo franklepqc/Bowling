@@ -4,7 +4,6 @@ namespace BowlingClasses.Core
 {
     public class Partie : IPartie
     {
-
         /// <summary>
         /// Cases du jeu.
         /// </summary>
@@ -30,32 +29,49 @@ namespace BowlingClasses.Core
         /// </summary>
         /// <param name="lancer">Nombre de quilles abattues.</param>
         /// <returns>Vrai si l'opération est une réussite.</returns>
-        public bool AjouterLancer(int lancer)
+        public bool AjouterLancer(int lancer, int? ixJoueur = null, int? ixCase = null)
         {
-            var essais = Cases[IndexJoueur][IndexCase].Essais;
-            
-            if (!essais[0].HasValue)
-            {
-                essais[0] = lancer;
-                
-                if (IndexCase < 9 && 10 == lancer)
-                {
-                    Suivant();
-                }
-            }
-            else if (!essais[1].HasValue)
-            {
-                essais[1] = lancer;
+            // Variables de travail.
+            var indexJoueur = (ixJoueur ?? IndexJoueur);
+            var indexCase = (ixCase ?? IndexCase);
 
-                if (IndexCase < 9)
+            if (indexJoueur < Equipe.Joueurs.Length && indexCase < 10)
+            {
+                var essais = Cases[indexJoueur][indexCase].Essais;
+
+                if (!essais[0].HasValue)
                 {
+                    essais[0] = lancer;
+
+                    if (indexCase < 9 && 10 == lancer)
+                    {
+                        Suivant();
+                    }
+                }
+                else if (!essais[1].HasValue)
+                {
+                    essais[1] = lancer;
+
+                    // Si on ne se trouve pas au 10ième carreau.
+                    if (indexCase < 9)
+                    {
+                        Suivant();
+                    }
+                    // Si on se trouve au 10ième et que la deuxième chance est ratée.
+                    else if (indexCase == 9 && (essais[0].Value + essais[1].Value < 10))
+                    {
+                        Suivant();
+                    }
+                }
+                else if (indexCase == 9 && essais.Length == 3 && !essais[2].HasValue)
+                {
+                    essais[2] = lancer;
                     Suivant();
                 }
-            }
-            else if (IndexCase == 9 && essais.Length == 3 && !essais[2].HasValue)
-            {
-                essais[2] = lancer;
-                Suivant();
+                else
+                {
+                    return false;
+                }
             }
             else
             {

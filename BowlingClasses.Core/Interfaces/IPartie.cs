@@ -8,6 +8,6 @@
         int IndexCase { get; }
         int IndexJoueur { get; }
 
-        bool AjouterLancer(int lancer);
+        bool AjouterLancer(int lancer, int? ixJoueur = null, int? ixCase = null);
     }
 }

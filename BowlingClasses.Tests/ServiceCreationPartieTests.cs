@@ -23,6 +23,7 @@ namespace BowlingClasses.Tests
             _service = new ServiceCreationPartie();
         }
 
+        [TestCategory(@"Service de création d'une partie")]
         [TestMethod]
         public void CreerPartieAvec1Joueurs_Succes()
         {
@@ -35,11 +36,12 @@ namespace BowlingClasses.Tests
             var actuel = _service.Creer(nombreJoueursAttendu);
 
             // Assertion.
-            Assert.AreEqual(nombreCasesAttendu, actuel.Cases.Count());
+            Assert.AreEqual(nombreCasesAttendu, actuel.Cases[0].Count());
             Assert.AreEqual(nombreJoueursAttendu, actuel.Equipe.Joueurs.Count());
             Assert.AreEqual(nomJoueur1Attendu, actuel.Equipe.Joueurs[0].Nom);
         }
 
+        [TestCategory(@"Service de création d'une partie")]
         [TestMethod]
         public void CreerPartieAvec4Joueurs_Succes()
         {
@@ -55,14 +57,15 @@ namespace BowlingClasses.Tests
             var actuel = _service.Creer(nombreJoueursAttendu);
 
             // Assertion.
-            Assert.AreEqual(nombreCasesAttendu, actuel.Cases.Count());
+            Assert.AreEqual(nombreCasesAttendu, actuel.Cases[0].Count());
             Assert.AreEqual(nombreJoueursAttendu, actuel.Equipe.Joueurs.Count());
             Assert.AreEqual(nomJoueur1Attendu, actuel.Equipe.Joueurs[0].Nom);
             Assert.AreEqual(nomJoueur2Attendu, actuel.Equipe.Joueurs[1].Nom);
             Assert.AreEqual(nomJoueur3Attendu, actuel.Equipe.Joueurs[2].Nom);
             Assert.AreEqual(nomJoueur4Attendu, actuel.Equipe.Joueurs[3].Nom);
         }
-        
+
+        [TestCategory(@"Service de création d'une partie")]
         [TestMethod]
         public void CreerPartieAvec2Noms_Succes()
         {
@@ -76,7 +79,7 @@ namespace BowlingClasses.Tests
             var actuel = _service.Creer(nomJoueur1Attendu, nomJoueur2Attendu);
 
             // Assertion.
-            Assert.AreEqual(nombreCasesAttendu, actuel.Cases.Count());
+            Assert.AreEqual(nombreCasesAttendu, actuel.Cases[0].Count());
             Assert.AreEqual(nombreJoueursAttendu, actuel.Equipe.Joueurs.Count());
             Assert.AreEqual(nomJoueur1Attendu, actuel.Equipe.Joueurs[0].Nom);
             Assert.AreEqual(nomJoueur2Attendu, actuel.Equipe.Joueurs[1].Nom);

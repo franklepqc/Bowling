@@ -22,6 +22,7 @@ namespace BowlingClasses.Tests
             _service = new ServiceCalculScore();
         }
 
+        [TestCategory(@"Service de calcul de score")]
         [TestMethod]
         public void CalculerScore_Succes100Points()
         {
@@ -50,6 +51,7 @@ namespace BowlingClasses.Tests
             Assert.AreEqual(attendu, actuel);
         }
 
+        [TestCategory(@"Service de calcul de score")]
         [TestMethod]
         public void CalculerScore_SuccesPartieParfaite()
         {
