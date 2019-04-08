@@ -137,5 +137,34 @@ namespace BowlingClasses.Tests
             // Assertion.
             Assert.AreEqual(attendu, actuel);
         }
+
+        [TestCategory(@"Service de calcul de score")]
+        [TestMethod]
+        public void CalculerScore_PartieAleatoire1()
+        {
+            // Variables de travail.
+            var lancers = new[]
+            {
+                10,         // Case 1.
+                9, 0,       // Case 2.
+                10,         // Case 3.
+                9, 1,       // Case 4.
+                9, 0,       // Case 5.
+                10,         // Case 6.
+                9, 0,       // Case 7.
+                10,         // Case 8.
+                9, 0,       // Case 9.
+                10, 10, 9   // Case 10.
+            };
+
+            // Attendu.
+            var attendu = 161;
+
+            // Actuel.
+            var actuel = _service.Calculer(lancers);
+
+            // Assertion.
+            Assert.AreEqual(attendu, actuel);
+        }
     }
 }
