@@ -2,11 +2,11 @@
 {
     public interface IPartie
     {
-        ICase[] Cases { get; }
+        ICase[][] Cases { get; }
 
         IEquipe Equipe { get; }
-
-        int NoCaseCourante { get; }
+        int IndexCase { get; }
+        int IndexJoueur { get; }
 
         bool AjouterLancer(int lancer);
     }

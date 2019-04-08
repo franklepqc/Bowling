@@ -1,20 +1,14 @@
 ﻿using BowlingClasses.Core.Interfaces;
-using System;
-using System.Linq;
 
 namespace BowlingClasses.Core
 {
     public class Partie : IPartie
     {
-        /// <summary>
-        /// Index de case courante.
-        /// </summary>
-        private int _indexCaseCourante = 0;
 
         /// <summary>
         /// Cases du jeu.
         /// </summary>
-        public ICase[] Cases { get; set; }
+        public ICase[][] Cases { get; set; }
 
         /// <summary>
         /// Équipe.
@@ -22,9 +16,14 @@ namespace BowlingClasses.Core
         public IEquipe Equipe { get; set; }
 
         /// <summary>
-        /// Numéro de la case courante.
+        /// Index de la case à jouer.
         /// </summary>
-        public int NoCaseCourante => _indexCaseCourante;
+        public int IndexCase { get; private set; }
+
+        /// <summary>
+        /// Index du joueur.
+        /// </summary>
+        public int IndexJoueur { get; private set; }
 
         /// <summary>
         /// Ajout d'un lancer.
@@ -33,27 +32,30 @@ namespace BowlingClasses.Core
         /// <returns>Vrai si l'opération est une réussite.</returns>
         public bool AjouterLancer(int lancer)
         {
-            var essais = Cases[NoCaseCourante].Essais;
+            var essais = Cases[IndexJoueur][IndexCase].Essais;
             
             if (!essais[0].HasValue)
             {
                 essais[0] = lancer;
-
-                if (_indexCaseCourante < 9 && 10 == lancer)
+                
+                if (IndexCase < 9 && 10 == lancer)
                 {
-                    _indexCaseCourante++;
+                    Suivant();
                 }
             }
             else if (!essais[1].HasValue)
             {
                 essais[1] = lancer;
 
-                if (_indexCaseCourante < 9)
-                    _indexCaseCourante++;
+                if (IndexCase < 9)
+                {
+                    Suivant();
+                }
             }
-            else if (_indexCaseCourante == 9 && essais.Length == 3 && !essais[2].HasValue)
+            else if (IndexCase == 9 && essais.Length == 3 && !essais[2].HasValue)
             {
                 essais[2] = lancer;
+                Suivant();
             }
             else
             {
@@ -61,6 +63,19 @@ namespace BowlingClasses.Core
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Passe au suivant. Si les joueurs ont tous joué, on va au prochain carreau.
+        /// </summary>
+        private void Suivant()
+        {
+            // Si tous les joueurs ont joué.
+            if (++IndexJoueur >= Equipe.Joueurs.Length)
+            {
+                IndexJoueur = 0;
+                IndexCase++;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using BowlingClasses.Core.Interfaces;
-using System;
 
 namespace BowlingClasses.Core
 {
@@ -23,7 +22,7 @@ namespace BowlingClasses.Core
             }
 
             // Création des cases.
-            CreerCases(partie);
+            CreerCases(nombreJoueurs, partie);
 
             return partie;
         }
@@ -32,14 +31,19 @@ namespace BowlingClasses.Core
         /// Créer les cases pour la partie.
         /// </summary>
         /// <param name="partie">Partie.</param>
-        private void CreerCases(Partie partie)
+        private void CreerCases(int nombreJoueurs, Partie partie)
         {
-            partie.Cases = new ICase[10];
-            for (int i = 0; i < 9; i++)
+            partie.Cases = new ICase[nombreJoueurs][];
+            for (int i = 0; i < nombreJoueurs; i++)
             {
-                partie.Cases[i] = new CaseJeu(2);
+                partie.Cases[i] = new ICase[10];
+
+                for (int j = 0; j < 10; j++)
+                {
+                    partie.Cases[i][j] = new CaseJeu(2);
+                }
+                partie.Cases[i][9] = new CaseJeu(3);
             }
-            partie.Cases[9] = new CaseJeu(3);
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace BowlingClasses.Core
             partie.Equipe = equipe;
 
             // Création des cases.
-            CreerCases(partie);
+            CreerCases(equipe.Joueurs.Length, partie);
 
             return partie;
         }
@@ -79,7 +83,7 @@ namespace BowlingClasses.Core
             }
 
             // Création des cases.
-            CreerCases(partie);
+            CreerCases(nomsJoueurs.Length, partie);
 
             return partie;
         }

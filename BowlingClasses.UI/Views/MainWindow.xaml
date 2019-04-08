@@ -6,12 +6,24 @@
         xmlns:controles="clr-namespace:BowlingClasses.UI.Views"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Quilles" Height="780" Width="1130">
+        Title="Quilles" Height="780" Width="1140">
+    <Window.InputBindings>
+        <KeyBinding Key="NumPad0" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="0" />
+        <KeyBinding Key="NumPad1" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="1" />
+        <KeyBinding Key="NumPad2" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="2" />
+        <KeyBinding Key="NumPad3" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="3" />
+        <KeyBinding Key="NumPad4" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="4" />
+        <KeyBinding Key="NumPad5" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="5" />
+        <KeyBinding Key="NumPad6" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="6" />
+        <KeyBinding Key="NumPad7" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="7" />
+        <KeyBinding Key="NumPad8" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="8" />
+        <KeyBinding Key="NumPad9" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="9" />
+        <KeyBinding Key="Multiply" Command="{Binding Path=CommandeAjouterLancer, Mode=OneWay}" CommandParameter="10" />
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition />
-            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding Path=Equipe.Nom, Mode=OneWay}" />
@@ -62,10 +74,5 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <TextBox Text="{Binding Path=Lancer}" Width="200" />
-            <Button Command="{Binding Path=CommandeAjouterLancer}" CommandParameter="{Binding Path=SelectedItem, ElementName=lboxPJ, Mode=OneWay}" Content="Ajouter" />
-        </StackPanel>
     </Grid>
 </Window>

@@ -12,7 +12,7 @@ namespace BowlingClasses.UI.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         /// <summary>
-        /// Service de création d'une partie.
+        /// Services à injecter.
         /// </summary>
         private readonly IServiceCreationPartie _serviceCreationPartie;
         private readonly IServiceCalculScore _serviceCalculScore;
@@ -23,28 +23,9 @@ namespace BowlingClasses.UI.ViewModels
         private IPartie _partie;
 
         /// <summary>
-        /// Lancer.
-        /// </summary>
-        private int? _lancer;
-
-        /// <summary>
         /// Commande pour ajouter un lancer.
         /// </summary>
         public DelegateCommandBase CommandeAjouterLancer { get; private set; }
-
-        /// <summary>
-        /// Lancer à ajouter.
-        /// </summary>
-        public int? Lancer
-        {
-            get => _lancer;
-            set
-            {
-                _lancer = value;
-                RaisePropertyChanged();
-                CommandeAjouterLancer.RaiseCanExecuteChanged();
-            }
-        }
 
         /// <summary>
         /// Liste des cases de jeu.
@@ -62,9 +43,8 @@ namespace BowlingClasses.UI.ViewModels
             _serviceCalculScore = serviceCalculScore;
 
             // Assignation des commandes.
-            CommandeAjouterLancer = new DelegateCommand<PartieJoueurM>(
-                AjouterLancer, 
-                (pjm) => pjm != null && Lancer.HasValue);
+            CommandeAjouterLancer = new DelegateCommand<string>(
+                AjouterLancer);
 
             InitialiserAsync();
         }
@@ -83,30 +63,33 @@ namespace BowlingClasses.UI.ViewModels
             PartieJoueurs.Clear();
 
             // Ajouter.
-            _partie.Equipe.Joueurs
-                .ToList()
-                .ForEach(joueur =>
-                {
-                    PartieJoueurs.Add(new PartieJoueurM(joueur, _partie.Cases));
-                });
+            for (int iCptJoueurs = 0; iCptJoueurs < _partie.Equipe.Joueurs.Length; iCptJoueurs++)
+            {
+                PartieJoueurs.Add(new PartieJoueurM(_partie.Equipe.Joueurs[iCptJoueurs], _partie.Cases[iCptJoueurs]));
+            }
         });
 
         /// <summary>
         /// Ajoute le lancer.
         /// </summary>
-        private void AjouterLancer(PartieJoueurM partieJoueur)
+        private void AjouterLancer(string lancerStr)
         {
-            if (_partie.AjouterLancer(Lancer.Value))
+            // Variables de travail.
+            var lancer = System.Convert.ToInt32(lancerStr);
+            var partieJoueur = PartieJoueurs[_partie.IndexJoueur];
+
+            if (_partie.AjouterLancer(lancer))
             {
                 partieJoueur.CasesJeu
                     .ToList()
-                    .ForEach((caseJeu) => {
+                    .ForEach((caseJeu) =>
+                    {
                         caseJeu.SignalerChangement();
 
                         // Calculer le score en cours.
                         caseJeu.Score = _serviceCalculScore.Calculer(
                             partieJoueur.CasesJeu
-                            .SelectMany(k => 
+                            .SelectMany(k =>
                                 k.Essais
                                     .Where(p => p.HasValue)
                                     .Select(k => k.Value))
