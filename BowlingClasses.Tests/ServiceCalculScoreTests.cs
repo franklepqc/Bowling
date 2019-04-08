@@ -79,6 +79,35 @@ namespace BowlingClasses.Tests
             // Assertion.
             Assert.AreEqual(attendu, actuel);
         }
+        
+        [TestCategory(@"Service de calcul de score")]
+        [TestMethod]
+        public void CalculerScore_SuccesReserves()
+        {
+            // Variables de travail.
+            var lancers = new[]
+            {
+                1, 9,     // Case 1.
+                1, 9,     // Case 2.
+                1, 9,     // Case 3.
+                1, 9,     // Case 4.
+                1, 9,     // Case 5.
+                1, 9,     // Case 6.
+                1, 9,     // Case 7.
+                1, 9,     // Case 8.
+                1, 9,     // Case 9.
+                1, 9, 1   // Case 10.
+            };
+
+            // Attendu.
+            var attendu = 110;
+
+            // Actuel.
+            var actuel = _service.Calculer(lancers);
+
+            // Assertion.
+            Assert.AreEqual(attendu, actuel);
+        }
 
         [TestCategory(@"Service de calcul de score")]
         [TestMethod]
@@ -87,15 +116,15 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                10, 10,     // Case 1.
-                10, 10,     // Case 2.
-                10, 10,     // Case 3.
-                10, 10,     // Case 4.
-                10, 10,     // Case 5.
-                10, 10,     // Case 6.
-                10, 10,     // Case 7.
-                10, 10,     // Case 8.
-                10, 10,     // Case 9.
+                10,         // Case 1.
+                10,         // Case 2.
+                10,         // Case 3.
+                10,         // Case 4.
+                10,         // Case 5.
+                10,         // Case 6.
+                10,         // Case 7.
+                10,         // Case 8.
+                10,         // Case 9.
                 10, 10, 10  // Case 10.
             };
 
