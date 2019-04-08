@@ -50,6 +50,12 @@ namespace BowlingClasses.Core
                 }
                 else if (!essais[1].HasValue)
                 {
+                    // Réserve, calcul automatisé.
+                    if (lancer == 10)
+                    {
+                        lancer -= essais[0].Value;
+                    }
+
                     essais[1] = lancer;
 
                     // Si on ne se trouve pas au 10ième carreau.
