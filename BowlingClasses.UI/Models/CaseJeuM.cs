@@ -32,7 +32,7 @@ namespace BowlingClasses.UI.Models
         /// <summary>
         /// Détermine si c'est le dixième carreau.
         /// </summary>
-        public bool EstDixiemeCarreau { get; private set; }
+        public bool EstDixiemeCarreau => _caseJeu.EstDixiemeCarreau;
 
         /// <summary>
         /// Constructeur par défaut.
@@ -42,9 +42,6 @@ namespace BowlingClasses.UI.Models
         {
             // Case de jeu.
             _caseJeu = caseJeu;
-
-            // Initialiser le nombre de carreaux.
-            EstDixiemeCarreau = _caseJeu.Essais.Count() == 3;
         }
 
         /// <summary>
