@@ -2,6 +2,9 @@
 
 namespace BowlingClasses.Core
 {
+    /// <summary>
+    /// Représentation d'une case de jeu dans la grille.
+    /// </summary>
     public class CaseJeu : Interfaces.ICase
     {
         /// <summary>
@@ -44,7 +47,7 @@ namespace BowlingClasses.Core
         /// </summary>
         /// <param name="lancer">Nombre de quilles abattues.</param>
         /// <returns>Vrai si l'opération est une réussite.</returns>
-        public bool AjouterEssai(int lancer)
+        public void AjouterEssai(int lancer)
         {
             if (!Essais[0].HasValue)
             {
@@ -59,10 +62,10 @@ namespace BowlingClasses.Core
                     {
                         lancer -= Essais[0].Value;
                     }
-                    // On a voulu jouer au fin fineau!
+                    // On a voulu jouer au fin fineau! On quitte.
                     else if ((lancer + Essais[0].Value) > 10)
                     {
-                        return false;
+                        return;
                     }
                 }
                 else
@@ -84,8 +87,6 @@ namespace BowlingClasses.Core
             EstTerminee = (Essais.All(p => p.HasValue) ||
                 (Essais.FirstOrDefault() == NOMBRE_QUILLES_ABAT && !EstDixiemeCarreau) ||
                 (EstDixiemeCarreau && Essais[0].HasValue && Essais[1].HasValue && (Essais[0].Value + Essais[1].Value) < 10));
-
-            return true;
         }
     }
 }

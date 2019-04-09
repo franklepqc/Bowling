@@ -10,6 +10,6 @@
 
         int? Score { get; set; }
 
-        bool AjouterEssai(int lancer);
+        void AjouterEssai(int lancer);
     }
 }

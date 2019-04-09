@@ -2,6 +2,9 @@
 
 namespace BowlingClasses.Core
 {
+    /// <summary>
+    /// Représentation d'une partie de bowling.
+    /// </summary>
     public class Partie : IPartie
     {
         /// <summary>
@@ -34,22 +37,25 @@ namespace BowlingClasses.Core
             // Variables de travail.
             var indexJoueur = (ixJoueur ?? IndexJoueur);
             var indexCase = (ixCase ?? IndexCase);
-            var ajoutOk = false;
 
             if (indexJoueur < Equipe.Joueurs.Length && indexCase < 10)
             {
+                // Récupération de la case de jeu.
                 var caseJeu = Cases[indexJoueur][indexCase];
 
-                if (ajoutOk = caseJeu.AjouterEssai(lancer))
+                // Ajout du score.
+                caseJeu.AjouterEssai(lancer);
+
+                // Si la case est terminée, passer au suivant !
+                if (caseJeu.EstTerminee)
                 {
-                    if (caseJeu.EstTerminee)
-                    {
-                        Suivant();
-                    }
+                    Suivant();
                 }
+
+                return true;
             }
 
-            return ajoutOk;
+            return false;
         }
 
         /// <summary>
