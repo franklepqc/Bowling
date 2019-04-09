@@ -1,4 +1,5 @@
 ﻿using BowlingClasses.Core.Interfaces;
+using System.Linq;
 
 namespace BowlingClasses.Core
 {
@@ -11,6 +12,26 @@ namespace BowlingClasses.Core
         public Equipe(int nombreJoueurs)
         {
             Joueurs = new IJoueur[nombreJoueurs];
+        }
+
+        /// <summary>
+        /// Constructeur.
+        /// </summary>
+        /// <param name="noms">Noms des joueurs.</param>
+        public Equipe(params string[] noms)
+        {
+            Joueurs = noms
+                .Select(nom => new Joueur(nom))
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Constructeur.
+        /// </summary>
+        /// <param name="joueurs">Joueurs.</param>
+        public Equipe(IJoueur[] joueurs)
+        {
+            Joueurs = joueurs;
         }
 
         /// <summary>

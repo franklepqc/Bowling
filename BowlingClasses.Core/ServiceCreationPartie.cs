@@ -76,11 +76,7 @@ namespace BowlingClasses.Core
             var partie = new Partie();
 
             // Assignation des joueurs.
-            partie.Equipe = new Equipe(nomsJoueurs.Length);
-            for (int i = 0; i < nomsJoueurs.Length; i++)
-            {
-                partie.Equipe.Joueurs[i] = new Joueur(nomsJoueurs[i]);
-            }
+            partie.Equipe = new Equipe(nomsJoueurs);
 
             // Création des cases.
             CreerCases(nomsJoueurs.Length, partie);
