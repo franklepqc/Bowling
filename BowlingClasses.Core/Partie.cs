@@ -1,4 +1,6 @@
 ﻿using BowlingClasses.Core.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BowlingClasses.Core
 {
@@ -7,6 +9,20 @@ namespace BowlingClasses.Core
     /// </summary>
     public class Partie : IPartie
     {
+        /// <summary>
+        /// Service de calcul.
+        /// </summary>
+        private readonly IServiceCalculScore _serviceCalculScore;
+
+        /// <summary>
+        /// Constructeur par injection.
+        /// </summary>
+        /// <param name="serviceCalculScore">Calculateur de score.</param>
+        public Partie(IServiceCalculScore serviceCalculScore)
+        {
+            _serviceCalculScore = serviceCalculScore;
+        }
+
         /// <summary>
         /// Cases du jeu.
         /// </summary>
@@ -49,6 +65,10 @@ namespace BowlingClasses.Core
                 // Si la case est terminée, passer au suivant !
                 if (caseJeu.EstTerminee)
                 {
+                    // Recalculer les scores.
+                    CalculerScores(Cases[indexJoueur].Take(indexCase + 1).ToList());
+
+                    // Passe au joueur suivant.
                     Suivant();
                 }
 
@@ -56,6 +76,20 @@ namespace BowlingClasses.Core
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Calculer les scores rétrospectivement.
+        /// </summary>
+        /// <param name="cases">Cases.</param>
+        private void CalculerScores(List<ICase> cases)
+        {
+            cases
+                .ForEach(caseJeu => 
+                    caseJeu.Score = _serviceCalculScore
+                        .Calculer(
+                            cases.SelectMany(k => k.Essais.Where(p => p.HasValue).Select(p => p.Value)).ToArray(),
+                            cases.IndexOf(caseJeu) + 1));
         }
 
         /// <summary>

@@ -15,7 +15,6 @@ namespace BowlingClasses.UI.ViewModels
         /// Services à injecter.
         /// </summary>
         private readonly IServiceCreationPartie _serviceCreationPartie;
-        private readonly IServiceCalculScore _serviceCalculScore;
 
         /// <summary>
         /// Partie en cours.
@@ -36,11 +35,10 @@ namespace BowlingClasses.UI.ViewModels
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="serviceCreationPartie">Service de création d'une partie.</param>
-        public MainWindowViewModel(IServiceCreationPartie serviceCreationPartie, IServiceCalculScore serviceCalculScore)
+        public MainWindowViewModel(IServiceCreationPartie serviceCreationPartie)
         {
             // Assignation des objets injectés.
             _serviceCreationPartie = serviceCreationPartie;
-            _serviceCalculScore = serviceCalculScore;
 
             // Assignation des commandes.
             CommandeAjouterLancer = new DelegateCommand<string>(
@@ -86,17 +84,8 @@ namespace BowlingClasses.UI.ViewModels
                     .ToList()
                     .ForEach((caseJeu) =>
                     {
+                        // Signaler à l'interface que les valeurs ont changé.
                         caseJeu.SignalerChangement();
-
-                        // Calculer le score en cours.
-                        caseJeu.Score = _serviceCalculScore.Calculer(
-                            partieJoueur.CasesJeu
-                            .SelectMany(k =>
-                                k.Essais
-                                    .Where(p => p.HasValue)
-                                    .Select(k => k.Value))
-                            .ToArray(),
-                            System.Math.Min(10, partieJoueur.CasesJeu.IndexOf(caseJeu) + 1));
                     });
             }
         }

@@ -20,7 +20,7 @@ namespace BowlingClasses.Tests
         [ClassInitialize]
         public static void Initialiser(TestContext testContext)
         {
-            _service = new ServiceCreationPartie();
+            _service = new ServiceCreationPartie(null);
         }
 
         [TestCategory(@"Service de création d'une partie")]

@@ -19,15 +19,7 @@ namespace BowlingClasses.UI.Models
         /// <summary>
         /// Score à afficher.
         /// </summary>
-        public int? Score
-        {
-            get => _caseJeu.Score;
-            set
-            {
-                _caseJeu.Score = value.Value;
-                RaisePropertyChanged();
-            }
-        }
+        public int? Score => _caseJeu.Score;
 
         /// <summary>
         /// Détermine si c'est le dixième carreau.
@@ -49,6 +41,7 @@ namespace BowlingClasses.UI.Models
         /// </summary>
         public void SignalerChangement()
         {
+            RaisePropertyChanged(nameof(Score));
             RaisePropertyChanged(nameof(Essais));
         }
     }
