@@ -8,7 +8,7 @@ using Prism.Unity;
 namespace BowlingClasses.UI
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Logique d'interaction pour App.xaml
     /// </summary>
     public partial class App : PrismApplication
     {
@@ -16,7 +16,7 @@ namespace BowlingClasses.UI
         /// Obtient l'écran de démarrage.
         /// </summary>
         /// <returns>Vue principale.</returns>
-        protected override Window CreateShell() => 
+        protected override Window CreateShell() =>
             Container.Resolve<MainWindow>();
 
         /// <summary>
