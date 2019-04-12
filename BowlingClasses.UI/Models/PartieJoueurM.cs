@@ -29,8 +29,9 @@ namespace BowlingClasses.UI.Models
         {
             // Initialisation.
             _joueur = joueur;
+            int indexCase = 0;
             casesJeu.ToList()
-                .ForEach(caseJeu => CasesJeu.Add(new CaseJeuM(caseJeu)));
+                .ForEach(caseJeu => CasesJeu.Add(new CaseJeuM(caseJeu, indexCase++)));
         }
     }
 }

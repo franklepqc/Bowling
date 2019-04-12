@@ -27,13 +27,20 @@ namespace BowlingClasses.UI.Models
         public bool EstDixiemeCarreau => _caseJeu.EstDixiemeCarreau;
 
         /// <summary>
+        /// Index de la case.
+        /// </summary>
+        public int IndexCase { get; private set; }
+
+        /// <summary>
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="caseJeu">Case de jeu.</param>
-        public CaseJeuM(ICase caseJeu)
+        /// <param name="indexCase">Index la case pour le positionnement.</param>
+        public CaseJeuM(ICase caseJeu, int indexCase)
         {
             // Case de jeu.
             _caseJeu = caseJeu;
+            IndexCase = indexCase;
         }
 
         /// <summary>

@@ -16,15 +16,33 @@
         <TextBlock Grid.Column="0" Text="{Binding Path=Nom, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
 
         <!-- Cases de jeu. -->
-        <ListBox Grid.Column="1" ItemsSource="{Binding Path=CasesJeu}">
+        <ListBox Grid.Column="1" ItemsSource="{Binding Path=CasesJeu}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Stretch" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Grid.Column" Value="{Binding Path=IndexCase, Mode=OneWay}" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controles:CaseJeu />
+                    <controles:CaseJeu Grid.Column="{TemplateBinding Property=Grid.Column}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
