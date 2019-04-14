@@ -23,6 +23,17 @@ namespace BowlingClasses.Core
         }
 
         /// <summary>
+        /// Constructeur par défaut.
+        /// </summary>
+        /// <param name="essais">Essais.</param>
+        /// <param name="estDixiemeCarreau">Indicateur dixième carreau.</param>
+        public CaseJeu(int?[] essais, bool estDixiemeCarreau = false)
+        {
+            Essais = essais;
+            EstDixiemeCarreau = estDixiemeCarreau;
+        }
+
+        /// <summary>
         /// Essais.
         /// </summary>
         public int?[] Essais { get; private set; }
