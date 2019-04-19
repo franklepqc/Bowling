@@ -21,12 +21,12 @@
                 
                 <!-- Premier essai. -->
                 <Border Grid.Column="0" BorderThickness="1" BorderBrush="Black">
-                    <TextBlock Text="{Binding Path=Essais[0], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=PremierEssai, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
                 
                 <!-- Deuxième essai. -->
                 <Border Grid.Column="1" BorderThickness="1" BorderBrush="Black">
-                    <TextBlock Text="{Binding Path=Essais[1], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=DeuxiemeEssai, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
 
                 <!-- Troisième essai. -->
@@ -38,7 +38,7 @@
                             </Binding.Converter>
                         </Binding>
                     </Border.Visibility>
-                    <TextBlock Text="{Binding Path=Essais[2], Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Path=TroisiemeEssai, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Border>
             </Grid>
 

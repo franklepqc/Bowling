@@ -1,5 +1,6 @@
 ﻿using BowlingClasses.Core.Interfaces;
 using Prism.Mvvm;
+using System;
 using System.Linq;
 
 namespace BowlingClasses.UI.Models
@@ -12,9 +13,20 @@ namespace BowlingClasses.UI.Models
         private ICase _caseJeu;
 
         /// <summary>
-        /// Essais du joueur.
+        /// Premier essai.
         /// </summary>
-        public int?[] Essais => _caseJeu.Essais;
+        public string PremierEssai =>
+            (_caseJeu.Essais[0] == 10 ? "X" : _caseJeu.Essais[0].ToString());
+
+        /// <summary>
+        /// Deuxième essai.
+        /// </summary>
+        public string DeuxiemeEssai => ObtenirCaractere(1);
+
+        /// <summary>
+        /// Troisième essai.
+        /// </summary>
+        public string TroisiemeEssai => ObtenirCaractere(2);
 
         /// <summary>
         /// Score à afficher.
@@ -49,7 +61,44 @@ namespace BowlingClasses.UI.Models
         public void SignalerChangement()
         {
             RaisePropertyChanged(nameof(Score));
-            RaisePropertyChanged(nameof(Essais));
+            RaisePropertyChanged(nameof(PremierEssai));
+            RaisePropertyChanged(nameof(DeuxiemeEssai));
+            RaisePropertyChanged(nameof(TroisiemeEssai));
+        }
+
+        /// <summary>
+        /// Obtenir le caractère selon l'index.
+        /// </summary>
+        /// <param name="indexActuel">Index actuel.</param>
+        /// <returns>Caractère à afficher.</returns>
+        private string ObtenirCaractere(int indexActuel)
+        {
+            if (indexActuel >= _caseJeu.Essais.Length) return string.Empty;
+
+            int indexPrecedent = indexActuel - 1;
+            var actuel = _caseJeu.Essais[indexActuel];
+            var precedent = _caseJeu.Essais[indexPrecedent];
+
+            if (EstDixiemeCarreau && actuel == 10)
+            {
+                return "X";
+            }
+            else if (!EstDixiemeCarreau && (actuel + precedent) == 10)
+            {
+                return "/";
+            }
+            else if (EstDixiemeCarreau && indexActuel == 1 && (actuel + precedent) == 10)
+            {
+                return "/";
+            }
+            else if (EstDixiemeCarreau && indexActuel == 2 && (actuel + precedent + _caseJeu.Essais[indexActuel - 2]) == 20)
+            {
+                return "/";
+            }
+            else
+            {
+                return actuel.ToString();
+            }
         }
     }
 }
