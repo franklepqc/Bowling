@@ -94,7 +94,7 @@ namespace BowlingClasses.Core
                 {
                     partie.Cases[i][j] = new CaseJeu(2);
                 }
-                partie.Cases[i][9] = new CaseJeu(3, true);
+                partie.Cases[i][9] = new CaseJeu(3);
             }
         }
     }

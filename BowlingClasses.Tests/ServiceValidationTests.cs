@@ -38,7 +38,7 @@ namespace BowlingClasses.Tests
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
-                new CaseJeu(new int?[] { 0, 9, 0 }, true),
+                new CaseJeu(new int?[] { 0, 9, 0 }),
             };
 
             // Attendu.
@@ -67,7 +67,7 @@ namespace BowlingClasses.Tests
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
-                new CaseJeu(new int?[] { 0, 9, 0 }, true),
+                new CaseJeu(new int?[] { 0, 9, 0 }),
             };
 
             // Attendu.
@@ -96,7 +96,7 @@ namespace BowlingClasses.Tests
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
-                new CaseJeu(new int?[] { 0, 9, 0 }, true),
+                new CaseJeu(new int?[] { 0, 9, 0 }),
             };
 
             // Attendu.
@@ -176,7 +176,7 @@ namespace BowlingClasses.Tests
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
-                new CaseJeu(new int?[] { 0, 9, 0 }, true),
+                new CaseJeu(new int?[] { 0, 9, 0 }),
             };
 
             // Attendu.
@@ -205,7 +205,7 @@ namespace BowlingClasses.Tests
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
                 new CaseJeu(new int?[] { 0, 9 }),
-                new CaseJeu(new int?[] { 0, 9, 11 }, true),
+                new CaseJeu(new int?[] { 0, 9, 11 }),
             };
 
             // Attendu.

@@ -16,21 +16,18 @@ namespace BowlingClasses.Core
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="nombreEssais">Nombre d'essai.</param>
-        public CaseJeu(int nombreEssais, bool estDixiemeCarreau = false)
+        public CaseJeu(int nombreEssais)
         {
             Essais = new int?[nombreEssais];
-            EstDixiemeCarreau = estDixiemeCarreau;
         }
 
         /// <summary>
         /// Constructeur par défaut.
         /// </summary>
         /// <param name="essais">Essais.</param>
-        /// <param name="estDixiemeCarreau">Indicateur dixième carreau.</param>
-        public CaseJeu(int?[] essais, bool estDixiemeCarreau = false)
+        public CaseJeu(int?[] essais)
         {
             Essais = essais;
-            EstDixiemeCarreau = estDixiemeCarreau;
         }
 
         /// <summary>
@@ -46,12 +43,15 @@ namespace BowlingClasses.Core
         /// <summary>
         /// À savoir si la case est terminée.
         /// </summary>
-        public bool EstTerminee { get; private set; }
+        public bool EstTerminee => 
+            (Essais.All(p => p.HasValue) ||
+             (Essais.FirstOrDefault() == NOMBRE_QUILLES_ABAT && !EstDixiemeCarreau) ||
+             (EstDixiemeCarreau && Essais[0].HasValue && Essais[1].HasValue && (Essais[0].Value + Essais[1].Value) < 10));
 
         /// <summary>
         /// À savoir si c'est le dixième carreau.
         /// </summary>
-        public bool EstDixiemeCarreau { get; private set; }
+        public bool EstDixiemeCarreau => Essais.Count() == 3;
 
         /// <summary>
         /// Valide que l'ajout est possible.
@@ -93,11 +93,6 @@ namespace BowlingClasses.Core
             {
                 Essais[2] = lancer;
             }
-
-            // Détermine si toutes les valeurs sont assignées ou s'il s'agit d'un abat avant le 10ième carreau.
-            EstTerminee = (Essais.All(p => p.HasValue) ||
-                (Essais.FirstOrDefault() == NOMBRE_QUILLES_ABAT && !EstDixiemeCarreau) ||
-                (EstDixiemeCarreau && Essais[0].HasValue && Essais[1].HasValue && (Essais[0].Value + Essais[1].Value) < 10));
         }
     }
 }
