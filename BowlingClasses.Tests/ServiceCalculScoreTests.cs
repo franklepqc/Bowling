@@ -8,6 +8,20 @@ namespace BowlingClasses.Tests
     public class ServiceCalculScoreTests
     {
         /// <summary>
+        /// Classe bidon pour les tests.
+        /// On assume que tous les paramètres sont valides.
+        /// </summary>
+        private class ServiceValidationBidon : IServiceValidation
+        {
+            /// <summary>
+            /// Aucune validation. Ok tout le temps.
+            /// </summary>
+            /// <param name="cases">Cases à valider.</param>
+            /// <returns>Vrai.</returns>
+            public bool Valider(ICase[] cases) => true;
+        }
+
+        /// <summary>
         /// Conteneur.
         /// </summary>
         private static IServiceCalculScore _service;
@@ -19,7 +33,8 @@ namespace BowlingClasses.Tests
         [ClassInitialize]
         public static void Initialiser(TestContext testContext)
         {
-            _service = new ServiceCalculScore();
+            _service = new ServiceCalculScore(
+                new ServiceValidationBidon());
         }
 
         [TestCategory(@"Service de calcul de score")]
@@ -27,25 +42,25 @@ namespace BowlingClasses.Tests
         public void CalculerScore_Succes100Points()
         {
             // Variables de travail.
-            var lancers = new[]
+            var cases = new[]
             {
-                0, 10,     // Case 1.
-                0, 10,     // Case 2.
-                0, 10,     // Case 3.
-                0, 10,     // Case 4.
-                0, 10,     // Case 5.
-                0, 10,     // Case 6.
-                0, 10,     // Case 7.
-                0, 10,     // Case 8.
-                0, 10,     // Case 9.
-                0, 10, 0   // Case 10.
+                new CaseJeu(new int?[] { 0, 10 }),    // Case 1.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 2.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 3.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 4.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 5.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 6.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 7.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 8.
+                new CaseJeu(new int?[] { 0, 10}),     // Case 9.
+                new CaseJeu(new int?[] { 0, 10, 0 })  // Case 10.
             };
 
             // Attendu.
             var attendu = 100;
 
             // Actuel.
-            var actuel = _service.Calculer(lancers);
+            var actuel = _service.Calculer(cases);
 
             // Assertion.
             Assert.AreEqual(attendu, actuel);
@@ -58,16 +73,16 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                0, 10,     // Case 1.
-                0, 10,     // Case 2.
-                0, 10,     // Case 3.
-                0, 10,     // Case 4.
-                0, 10,     // Case 5.
-                0, 10,     // Case 6.
-                0, 10,     // Case 7.
-                0, 10,     // Case 8.
-                0, 10,     // Case 9.
-                0, 10, 0   // Case 10.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 1.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 2.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 3.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 4.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 5.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 6.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 7.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 8.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 9.
+                new CaseJeu(new int?[] { 0, 10, 0 })   // Case 10.
             };
 
             // Attendu.
@@ -87,16 +102,16 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                1, 9,     // Case 1.
-                1, 9,     // Case 2.
-                1, 9,     // Case 3.
-                1, 9,     // Case 4.
-                1, 9,     // Case 5.
-                1, 9,     // Case 6.
-                1, 9,     // Case 7.
-                1, 9,     // Case 8.
-                1, 9,     // Case 9.
-                1, 9, 1   // Case 10.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 1.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 2.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 3.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 4.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 5.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 6.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 7.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 8.
+                new CaseJeu(new int?[] { 1, 9 }),     // Case 9.
+                new CaseJeu(new int?[] { 1, 9, 1 })   // Case 10.
             };
 
             // Attendu.
@@ -116,16 +131,16 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                1, 1,     // Case 1.
-                1, 1,     // Case 2.
-                1, 1,     // Case 3.
-                1, 1,     // Case 4.
-                1, 1,     // Case 5.
-                1, 1,     // Case 6.
-                1, 1,     // Case 7.
-                1, 1,     // Case 8.
-                1, 1,     // Case 9.
-                1, 1      // Case 10.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 1.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 2.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 3.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 4.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 5.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 6.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 7.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 8.
+                new CaseJeu(new int?[] { 1, 1 }),     // Case 9.
+                new CaseJeu(new int?[] { 1, 1 })      // Case 10.
             };
 
             // Attendu.
@@ -145,16 +160,16 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                10,         // Case 1.
-                10,         // Case 2.
-                10,         // Case 3.
-                10,         // Case 4.
-                10,         // Case 5.
-                10,         // Case 6.
-                10,         // Case 7.
-                10,         // Case 8.
-                10,         // Case 9.
-                10, 10, 10  // Case 10.
+                new CaseJeu(new int?[] { 10 }),         // Case 1.
+                new CaseJeu(new int?[] { 10 }),         // Case 2.
+                new CaseJeu(new int?[] { 10 }),         // Case 3.
+                new CaseJeu(new int?[] { 10 }),         // Case 4.
+                new CaseJeu(new int?[] { 10 }),         // Case 5.
+                new CaseJeu(new int?[] { 10 }),         // Case 6.
+                new CaseJeu(new int?[] { 10 }),         // Case 7.
+                new CaseJeu(new int?[] { 10 }),         // Case 8.
+                new CaseJeu(new int?[] { 10 }),         // Case 9.
+                new CaseJeu(new int?[] { 10, 10, 10 })  // Case 10.
             };
 
             // Attendu.
@@ -174,16 +189,16 @@ namespace BowlingClasses.Tests
             // Variables de travail.
             var lancers = new[]
             {
-                10,         // Case 1.
-                9, 0,       // Case 2.
-                10,         // Case 3.
-                9, 1,       // Case 4.
-                9, 0,       // Case 5.
-                10,         // Case 6.
-                9, 0,       // Case 7.
-                10,         // Case 8.
-                9, 0,       // Case 9.
-                10, 10, 9   // Case 10.
+                new CaseJeu(new int?[] { 10 }),         // Case 1.
+                new CaseJeu(new int?[] { 9, 0 }),       // Case 2.
+                new CaseJeu(new int?[] { 10 }),         // Case 3.
+                new CaseJeu(new int?[] { 9, 1 }),       // Case 4.
+                new CaseJeu(new int?[] { 9, 0 }),       // Case 5.
+                new CaseJeu(new int?[] { 10 }),         // Case 6.
+                new CaseJeu(new int?[] { 9, 0 }),       // Case 7.
+                new CaseJeu(new int?[] { 10 }),         // Case 8.
+                new CaseJeu(new int?[] { 9, 0 }),       // Case 9.
+                new CaseJeu(new int?[] { 10, 10, 9 })   // Case 10.
             };
 
             // Attendu.

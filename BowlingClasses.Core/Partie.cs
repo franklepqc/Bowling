@@ -88,7 +88,7 @@ namespace BowlingClasses.Core
                 .ForEach(caseJeu => 
                     caseJeu.Score = _serviceCalculScore
                         .Calculer(
-                            cases.SelectMany(k => k.Essais.Where(p => p.HasValue).Select(p => p.Value)).ToArray(),
+                            cases.ToArray(),
                             cases.IndexOf(caseJeu) + 1));
         }
 
