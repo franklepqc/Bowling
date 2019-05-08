@@ -15,18 +15,17 @@ namespace BowlingClasses.UI.Models
         /// <summary>
         /// Premier essai.
         /// </summary>
-        public string PremierEssai =>
-            (_caseJeu.Essais[0] == 10 ? "X" : _caseJeu.Essais[0].ToString());
+        public string PremierEssai => ObtenirCaracterePremierEssai();
 
         /// <summary>
         /// Deuxième essai.
         /// </summary>
-        public string DeuxiemeEssai => ObtenirCaractere(1);
+        public string DeuxiemeEssai => ObtenirCaractereDeuxiemeEssai(_caseJeu.Essais[1], _caseJeu.Essais[0]);
 
         /// <summary>
         /// Troisième essai.
         /// </summary>
-        public string TroisiemeEssai => ObtenirCaractere(2);
+        public string TroisiemeEssai => ObtenirCaractereTroisiemeEssai();
 
         /// <summary>
         /// Score à afficher.
@@ -71,33 +70,84 @@ namespace BowlingClasses.UI.Models
         /// </summary>
         /// <param name="indexActuel">Index actuel.</param>
         /// <returns>Caractère à afficher.</returns>
-        private string ObtenirCaractere(int indexActuel)
+        private string ObtenirCaracterePremierEssai()
         {
-            if (indexActuel >= _caseJeu.Essais.Length) return string.Empty;
+            var lancer = _caseJeu.Essais[0];
 
-            int indexPrecedent = indexActuel - 1;
-            var actuel = _caseJeu.Essais[indexActuel];
-            var precedent = _caseJeu.Essais[indexPrecedent];
-
-            if (EstDixiemeCarreau && actuel == 10)
+            // Variables de travail.
+            if (!lancer.HasValue)
+            {
+                return string.Empty;
+            }
+            else if (lancer.Value == 0)
+            {
+                return "-";
+            }
+            else if (lancer.Value == 10)
             {
                 return "X";
             }
-            else if (!EstDixiemeCarreau && (actuel + precedent) == 10)
+            else
             {
-                return "/";
+                return lancer.Value.ToString();
             }
-            else if (EstDixiemeCarreau && indexActuel == 1 && (actuel + precedent) == 10)
+        }
+
+        /// <summary>
+        /// Obtenir le caractère selon l'index.
+        /// </summary>
+        /// <param name="indexActuel">Index actuel.</param>
+        /// <returns>Caractère à afficher.</returns>
+        private string ObtenirCaractereDeuxiemeEssai(int? lancer, int? lancerPrecedent)
+        {
+            // Variables de travail.
+            if (!(lancer.HasValue && lancerPrecedent.HasValue))
             {
-                return "/";
+                return string.Empty;
             }
-            else if (EstDixiemeCarreau && indexActuel == 2 && (actuel + precedent + _caseJeu.Essais[indexActuel - 2]) == 20)
+            else if (lancer.Value == 0)
+            {
+                return "-";
+            }
+            else if (EstDixiemeCarreau && lancer.Value == 10 && lancerPrecedent.Value != 0)
+            {
+                return "X";
+            }
+            else if (lancer.Value + lancerPrecedent.Value == 10)
             {
                 return "/";
             }
             else
             {
-                return actuel.ToString();
+                return lancer.Value.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Obtenir le caractère selon l'index.
+        /// </summary>
+        /// <param name="indexActuel">Index actuel.</param>
+        /// <returns>Caractère à afficher.</returns>
+        private string ObtenirCaractereTroisiemeEssai()
+        {
+            // Variables de travail.
+            if (EstDixiemeCarreau)
+            {
+                if (_caseJeu.Essais[0].HasValue && 
+                    _caseJeu.Essais[2].HasValue &&
+                    _caseJeu.Essais[0].Value != 10 &&
+                    _caseJeu.Essais[0].Value == _caseJeu.Essais[2].Value)
+                {
+                    return _caseJeu.Essais[2].Value.ToString();
+                }
+                else
+                {
+                    return ObtenirCaractereDeuxiemeEssai(_caseJeu.Essais[2], _caseJeu.Essais[1]);
+                }
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }
