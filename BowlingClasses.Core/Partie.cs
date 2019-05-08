@@ -36,7 +36,7 @@ namespace BowlingClasses.Core
         /// <summary>
         /// Index de la case à jouer.
         /// </summary>
-        public int IndexCase { get; private set; }
+        public Dictionary<int, int> IndexCaseParJoueur { get; private set; } = new Dictionary<int, int>();
 
         /// <summary>
         /// Index du joueur.
@@ -48,11 +48,11 @@ namespace BowlingClasses.Core
         /// </summary>
         /// <param name="lancer">Nombre de quilles abattues.</param>
         /// <returns>Vrai si l'opération est une réussite.</returns>
-        public bool AjouterLancer(int lancer, int? ixJoueur = null, int? ixCase = null)
+        public bool AjouterLancer(int lancer, int? ixJoueur = null)
         {
             // Variables de travail.
             var indexJoueur = (ixJoueur ?? IndexJoueur);
-            var indexCase = (ixCase ?? IndexCase);
+            var indexCase = IndexCaseParJoueur[indexJoueur];
 
             if (indexJoueur < Equipe.Joueurs.Length && indexCase < 10)
             {
@@ -68,8 +68,11 @@ namespace BowlingClasses.Core
                     // Recalculer les scores.
                     CalculerScores(Cases[indexJoueur].Take(indexCase + 1).ToList());
 
+                    // Case suivante pour le joueur.
+                    IndexCaseParJoueur[indexJoueur]++;
+
                     // Passe au joueur suivant.
-                    Suivant();
+                    if (!ixJoueur.HasValue) Suivant();
                 }
 
                 return true;
@@ -101,7 +104,6 @@ namespace BowlingClasses.Core
             if (++IndexJoueur >= Equipe.Joueurs.Length)
             {
                 IndexJoueur = 0;
-                IndexCase++;
             }
         }
     }

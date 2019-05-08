@@ -95,6 +95,9 @@ namespace BowlingClasses.Core
                     partie.Cases[i][j] = new CaseJeu(2);
                 }
                 partie.Cases[i][9] = new CaseJeu(3);
+
+                // Index de partie.
+                partie.IndexCaseParJoueur[i] = 0;
             }
         }
     }
