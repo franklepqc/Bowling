@@ -28,74 +28,65 @@ namespace BowlingClasses.Core
         /// <param name="cases">Cases avec toutes les quilles abattues.</param>
         /// <param name="noCaseCourante">N° de case. Par défaut 10, calculer le tout.</param>
         /// <returns>Score.</returns>
-        public int Calculer(ICase[] cases, int noCaseCourante = 10)
+        public int? Calculer(ICase[] cases, int noCaseCourante = 10)
         {
             // Vérification des cases.
             // Si le tout n'est pas valide, retourner zéro.
             if (!_serviceValidation.Valider(cases)) return 0;
 
-            // Variables de travail.
+            // Variables.
+            int resultat = 0;
             int indexLancer = 0;
+            int premierLancer = 0,
+                deuxiemeLancer = 0,
+                troisiemeLancer = 0;
             var lancers = cases.SelectMany(
                     caseJeu => caseJeu.Essais.Where(essai => essai.HasValue).Select(essai => essai.Value))
                 .ToArray();
 
-            // Sélection des cases.
-            var tableau = cases
-                .Take(noCaseCourante)       // Prendre le nombre demandé.
-                                            // Calcul pour chaque case.
-                .Select(nombre => TraiterCase(lancers, ref indexLancer))
-                .ToArray();
-
-            // Calculer la somme.
-            return tableau.Sum();
-        }
-
-        /// <summary>
-        /// Traiter seulement qu'une case.
-        /// </summary>
-        /// <param name="lancers">Lancers.</param>
-        /// <param name="indexLancer">Index du lancer.</param>
-        /// <returns>Score de la case.</returns>
-        private int TraiterCase(int[] lancers, ref int indexLancer)
-        {
-            // Variables.
-            int resultat = 0;
-
             // Constantes.
             const int NOMBRE_QUILLES_TOTAL = 10;
 
-            // Premier lancer.
-            int premierLancer = ObtenirLancer(lancers, indexLancer);
-
-            // Cas d'un abat.
-            if (premierLancer == NOMBRE_QUILLES_TOTAL)
+            // Itération en cours.
+            for (int noCase = 1; noCase <= noCaseCourante; noCase++)
             {
-                resultat = premierLancer +
-                    ObtenirLancer(lancers, indexLancer + 1) +
-                    ObtenirLancer(lancers, indexLancer + 2);
+                // Premier lancer.
+                if (!ObtenirLancer(lancers, indexLancer, out premierLancer)) return null;
 
-                indexLancer++;
-            }
-            // L'abat est écarté, on doit procéder avec l'autre essai.
-            else
-            {
-                // Deuxième lancer.
-                int deuxiemeLancer = ObtenirLancer(lancers, indexLancer + 1);
-
-                // Vérification d'une réserve.
-                if (premierLancer + deuxiemeLancer == NOMBRE_QUILLES_TOTAL)
+                // Cas d'un abat.
+                if (premierLancer == NOMBRE_QUILLES_TOTAL)
                 {
-                    resultat = premierLancer + deuxiemeLancer + ObtenirLancer(lancers, indexLancer + 2);
+                    // Obtenir les lancers 2 et 3.
+                    if (!ObtenirLancer(lancers, indexLancer + 1, out deuxiemeLancer)) return null;
+                    if (!ObtenirLancer(lancers, indexLancer + 2, out troisiemeLancer)) return null;
+
+                    resultat += premierLancer +
+                        deuxiemeLancer +
+                        troisiemeLancer;
+
+                    indexLancer++;
                 }
-                // Aucun abat, aucune réserve. On ne fait qu'additionner le nombre
-                // de quilles abattues.
+                // L'abat est écarté, on doit procéder avec l'autre essai.
                 else
                 {
-                    resultat = premierLancer + deuxiemeLancer;
-                }
+                    // Deuxième lancer.
+                    if (!ObtenirLancer(lancers, indexLancer + 1, out deuxiemeLancer)) return null;
 
-                indexLancer += 2;
+                    // Vérification d'une réserve.
+                    if (premierLancer + deuxiemeLancer == NOMBRE_QUILLES_TOTAL)
+                    {
+                        if (!ObtenirLancer(lancers, indexLancer + 2, out troisiemeLancer)) return null;
+                        resultat += premierLancer + deuxiemeLancer + troisiemeLancer;
+                    }
+                    // Aucun abat, aucune réserve. On ne fait qu'additionner le nombre
+                    // de quilles abattues.
+                    else
+                    {
+                        resultat += premierLancer + deuxiemeLancer;
+                    }
+
+                    indexLancer += 2;
+                }
             }
 
             return resultat;
@@ -106,11 +97,22 @@ namespace BowlingClasses.Core
         /// </summary>
         /// <param name="lancers">Tous les lancers.</param>
         /// <param name="index">Position visée.</param>
-        /// <returns>Lancer, sinon 0.</returns>
-        private int ObtenirLancer(int[] lancers, int index)
+        /// <param name="lancer">Sortie. Résultat du "TryGet".</param>
+        /// <returns>Vrai si la valeur a pu être retrouvée.</returns>
+        private bool ObtenirLancer(int[] lancers, int index, out int lancer)
         {
-            if (index >= lancers.Length) return 0;
-            return lancers[index];
+            // Variables de travail.
+            lancer = 0;
+
+            // Index en dehors des limites.
+            if (index < 0 || index >= lancers.Length)
+            {
+                return false;
+            }
+
+            // Assignation.
+            lancer = lancers[index];
+            return true;
         }
     }
 }

@@ -97,6 +97,54 @@ namespace BowlingClasses.Tests
 
         [TestCategory(@"Service de calcul de score")]
         [TestMethod]
+        public void CalculerScore_SuccesPointageInconnuSeulement5Cases()
+        {
+            // Variables de travail.
+            var lancers = new[]
+            {
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 1.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 2.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 3.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 4.
+                new CaseJeu(new int?[] { 0, 10 })      // Case 5.
+            };
+
+            // Attendu.
+            var attendu = null as int?;
+
+            // Actuel.
+            var actuel = _service.Calculer(lancers);
+
+            // Assertion.
+            Assert.AreEqual(attendu, actuel);
+        }
+
+        [TestCategory(@"Service de calcul de score")]
+        [TestMethod]
+        public void CalculerScore_Succes40PointsSeulement5Cases()
+        {
+            // Variables de travail.
+            var lancers = new[]
+            {
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 1.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 2.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 3.
+                new CaseJeu(new int?[] { 0, 10 }),     // Case 4.
+                new CaseJeu(new int?[] { 0, 10 })      // Case 5.
+            };
+
+            // Attendu.
+            var attendu = 40;
+
+            // Actuel.
+            var actuel = _service.Calculer(lancers, 4);
+
+            // Assertion.
+            Assert.AreEqual(attendu, actuel);
+        }
+
+        [TestCategory(@"Service de calcul de score")]
+        [TestMethod]
         public void CalculerScore_SuccesReserves()
         {
             // Variables de travail.
