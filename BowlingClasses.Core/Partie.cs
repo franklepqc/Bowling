@@ -87,12 +87,15 @@ namespace BowlingClasses.Core
         /// <param name="cases">Cases.</param>
         private void CalculerScores(List<ICase> cases)
         {
-            cases
-                .ForEach(caseJeu => 
-                    caseJeu.Score = _serviceCalculScore
-                        .Calculer(
-                            cases.ToArray(),
-                            cases.IndexOf(caseJeu) + 1));
+            if (null != _serviceCalculScore)
+            {
+                cases
+                    .ForEach(caseJeu =>
+                        caseJeu.Score = _serviceCalculScore
+                            .Calculer(
+                                cases.ToArray(),
+                                cases.IndexOf(caseJeu) + 1));
+            }
         }
 
         /// <summary>
