@@ -97,7 +97,7 @@ namespace BowlingClasses.UI.ViewModels
         /// Initialiser les cases.
         /// </summary>
         /// <returns>Cases.</returns>
-        private Task InitialiserAsync() => Task.Run(() =>
+        private void InitialiserAsync()
         {
             // Réinitialiser.
             _partie = null;
@@ -111,7 +111,7 @@ namespace BowlingClasses.UI.ViewModels
             {
                 PartieJoueurs.Add(new PartieJoueurM(iCptJoueurs, _partie.Equipe.Joueurs[iCptJoueurs], _partie.Cases[iCptJoueurs]));
             }
-        });
+        }
 
         /// <summary>
         /// Activer la partie pré-jouée.

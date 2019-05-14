@@ -8,7 +8,7 @@ using System.Linq;
 namespace BowlingClasses.Tests
 {
     [TestClass]
-    public class LecteurFichierTexteTests
+    public class LecteurFichierTexteTests : LecteurFichierBase
     {
         /// <summary>
         /// Conteneur.
@@ -190,13 +190,5 @@ namespace BowlingClasses.Tests
                 attendu.Distinct().All(valeur => actuel.Contains(valeur)) &&
                 attendu.Length == actuel.Length);
         }
-
-        /// <summary>
-        /// Obtenir le stream selon le texte.
-        /// </summary>
-        /// <param name="texte">Texte du fichier.</param>
-        /// <returns>Simule un fichier.</returns>
-        private Stream ObtenirStream(string texte) =>
-            new MemoryStream(Encoding.UTF8.GetBytes(texte), false);
     }
 }
