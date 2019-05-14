@@ -13,7 +13,16 @@
         </Grid.ColumnDefinitions>
 
         <!-- Nom du joueur. -->
-        <TextBlock Grid.Column="0" Text="{Binding Path=Nom, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=Nom, Mode=OneWay}" VerticalAlignment="Center" FontSize="28" />
+            <Button Content="PJ" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Padding="5"
+                    Command="{Binding Path=DataContext.CommandePreJoue, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" 
+                    CommandParameter="{Binding Path=Id, Mode=OneWay}" />
+        </StackPanel>
+        
 
         <!-- Cases de jeu. -->
         <ListBox Grid.Column="1" ItemsSource="{Binding Path=CasesJeu}" HorizontalContentAlignment="Stretch">

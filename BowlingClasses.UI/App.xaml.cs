@@ -29,6 +29,8 @@ namespace BowlingClasses.UI
             containerRegistry.Register<IServiceCalculScore, ServiceCalculScore>();
             containerRegistry.Register<IServiceCreationPartie, ServiceCreationPartie>();
             containerRegistry.Register<IServiceValidation, ServiceValidation>();
+            containerRegistry.Register<IServicePreJoue, ServicePreJoue>();
+            containerRegistry.Register<ILecteur, LecteurFichierTexte>();
         }
     }
 }

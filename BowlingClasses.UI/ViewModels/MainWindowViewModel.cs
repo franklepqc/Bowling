@@ -11,15 +11,45 @@ namespace BowlingClasses.UI.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        #region Fields
+
         /// <summary>
         /// Services à injecter.
         /// </summary>
         private readonly IServiceCreationPartie _serviceCreationPartie;
+        private readonly IServicePreJoue _servicePreJoue;
 
         /// <summary>
         /// Partie en cours.
         /// </summary>
         private IPartie _partie;
+
+        #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructeur par défaut.
+        /// </summary>
+        /// <param name="serviceCreationPartie">Service de création d'une partie.</param>
+        /// <param name="servicePreJoue">Service pour les parties pré-jouées.</param>
+        public MainWindowViewModel(IServiceCreationPartie serviceCreationPartie, IServicePreJoue servicePreJoue)
+        {
+            // Assignation des objets injectés.
+            _serviceCreationPartie = serviceCreationPartie;
+            _servicePreJoue = servicePreJoue;
+
+            // Assignation des commandes.
+            CommandeAjouterLancer = new DelegateCommand<string>(
+                AjouterLancer);
+            CommandePreJoue = new DelegateCommand<int?>(PreJoue);
+
+            InitialiserAsync();
+        }
+
+        #endregion Constructors
+
+        #region Properties
 
         /// <summary>
         /// Commande pour ajouter un lancer.
@@ -27,45 +57,18 @@ namespace BowlingClasses.UI.ViewModels
         public DelegateCommandBase CommandeAjouterLancer { get; private set; }
 
         /// <summary>
+        /// Commande pour le service du pré-joué.
+        /// </summary>
+        public ICommand CommandePreJoue { get; private set; }
+
+        /// <summary>
         /// Liste des cases de jeu.
         /// </summary>
         public ObservableCollection<PartieJoueurM> PartieJoueurs { get; private set; } = new ObservableCollection<PartieJoueurM>();
 
-        /// <summary>
-        /// Constructeur par défaut.
-        /// </summary>
-        /// <param name="serviceCreationPartie">Service de création d'une partie.</param>
-        public MainWindowViewModel(IServiceCreationPartie serviceCreationPartie)
-        {
-            // Assignation des objets injectés.
-            _serviceCreationPartie = serviceCreationPartie;
+        #endregion Properties
 
-            // Assignation des commandes.
-            CommandeAjouterLancer = new DelegateCommand<string>(
-                AjouterLancer);
-
-            InitialiserAsync();
-        }
-
-        /// <summary>
-        /// Initialiser les cases.
-        /// </summary>
-        /// <returns>Cases.</returns>
-        private Task InitialiserAsync() => Task.Run(() =>
-        {
-            // Réinitialiser.
-            _partie = null;
-            _partie = _serviceCreationPartie.Creer(6);
-
-            // Réinitialiser.
-            PartieJoueurs.Clear();
-
-            // Ajouter.
-            for (int iCptJoueurs = 0; iCptJoueurs < _partie.Equipe.Joueurs.Length; iCptJoueurs++)
-            {
-                PartieJoueurs.Add(new PartieJoueurM(_partie.Equipe.Joueurs[iCptJoueurs], _partie.Cases[iCptJoueurs]));
-            }
-        });
+        #region Methods
 
         /// <summary>
         /// Ajoute le lancer.
@@ -89,5 +92,66 @@ namespace BowlingClasses.UI.ViewModels
                     });
             }
         }
+
+        /// <summary>
+        /// Initialiser les cases.
+        /// </summary>
+        /// <returns>Cases.</returns>
+        private Task InitialiserAsync() => Task.Run(() =>
+        {
+            // Réinitialiser.
+            _partie = null;
+            _partie = _serviceCreationPartie.Creer(6);
+
+            // Réinitialiser.
+            PartieJoueurs.Clear();
+
+            // Ajouter.
+            for (int iCptJoueurs = 0; iCptJoueurs < _partie.Equipe.Joueurs.Length; iCptJoueurs++)
+            {
+                PartieJoueurs.Add(new PartieJoueurM(iCptJoueurs, _partie.Equipe.Joueurs[iCptJoueurs], _partie.Cases[iCptJoueurs]));
+            }
+        });
+
+        /// <summary>
+        /// Activer la partie pré-jouée.
+        /// </summary>
+        /// <param name="indexJoueur">Index du joueur.</param>
+        private void PreJoue(int? indexJoueur)
+        {
+            if (indexJoueur.HasValue &&
+                indexJoueur.Value >= 0 &&
+                indexJoueur.Value < PartieJoueurs.Count)
+            {
+                var ixJoueur = indexJoueur.Value;
+
+                // Ouverture du dialogue.
+                var dialogue = new Microsoft.Win32.OpenFileDialog();
+                dialogue.Filter = "Fichiers texte|*.txt";
+                dialogue.Multiselect = false;
+
+                // Si un fichier est choisi.
+                if (true == dialogue.ShowDialog())
+                {
+                    // Si le score est bel et bien lu et entré.
+                    if (_servicePreJoue.EntrerScore(dialogue.OpenFile(), _partie, ixJoueur))
+                    {
+                        // Indique le joueur est absent.
+                        _partie.Equipe.Joueurs[ixJoueur].EstAbsent = true;
+
+                        // Rafraîchir l'affichage.
+                        PartieJoueurs[ixJoueur].CasesJeu
+                            .ToList()
+                            .ForEach((caseJeu) =>
+                            {
+                                // Signaler à l'interface que les valeurs ont changé.
+                                caseJeu.SignalerChangement();
+                            });
+                    }
+                }
+            }
+        }
+
+        #endregion Methods
     }
 }

@@ -14,5 +14,10 @@
         /// Nom.
         /// </summary>
         public string Nom { get; set; }
+
+        /// <summary>
+        /// Absent ou non.
+        /// </summary>
+        public bool EstAbsent { get; set; }
     }
 }

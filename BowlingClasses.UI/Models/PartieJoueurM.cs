@@ -7,15 +7,33 @@ namespace BowlingClasses.UI.Models
 {
     public class PartieJoueurM
     {
+        #region Fields
+
         /// <summary>
         /// Joueur.
         /// </summary>
         private readonly IJoueur _joueur;
 
+        #endregion Fields
+
+        #region Constructors
+
         /// <summary>
-        /// Nom du joueur.
+        /// Constructeur par défaut.
         /// </summary>
-        public string Nom => _joueur.Nom;
+        public PartieJoueurM(int id, IJoueur joueur, IEnumerable<ICase> casesJeu)
+        {
+            // Initialisation.
+            Id = id;
+            _joueur = joueur;
+            int indexCase = 0;
+            casesJeu.ToList()
+                .ForEach(caseJeu => CasesJeu.Add(new CaseJeuM(caseJeu, indexCase++)));
+        }
+
+        #endregion Constructors
+
+        #region Properties
 
         /// <summary>
         /// Cases du jeu.
@@ -23,15 +41,15 @@ namespace BowlingClasses.UI.Models
         public ObservableCollection<CaseJeuM> CasesJeu { get; private set; } = new ObservableCollection<CaseJeuM>();
 
         /// <summary>
-        /// Constructeur par défaut.
+        /// Index.
         /// </summary>
-        public PartieJoueurM(IJoueur joueur, IEnumerable<ICase> casesJeu)
-        {
-            // Initialisation.
-            _joueur = joueur;
-            int indexCase = 0;
-            casesJeu.ToList()
-                .ForEach(caseJeu => CasesJeu.Add(new CaseJeuM(caseJeu, indexCase++)));
-        }
+        public int Id { get; private set; }
+
+        /// <summary>
+        /// Nom du joueur.
+        /// </summary>
+        public string Nom => _joueur.Nom;
+
+        #endregion Properties
     }
 }

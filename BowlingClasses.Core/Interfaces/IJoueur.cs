@@ -7,5 +7,6 @@ namespace BowlingClasses.Core.Interfaces
     public interface IJoueur
     {
         string Nom { get; set; }
+        bool EstAbsent { get; set; }
     }
 }

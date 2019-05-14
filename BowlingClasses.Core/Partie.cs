@@ -103,8 +103,15 @@ namespace BowlingClasses.Core
         /// </summary>
         private void Suivant()
         {
+            // Passer au suivant tant qu'il est absent.
+            do
+            {
+                IndexJoueur++;
+            }
+            while (IndexJoueur < Equipe.Joueurs.Length && Equipe.Joueurs[IndexJoueur].EstAbsent);
+
             // Si tous les joueurs ont joué.
-            if (++IndexJoueur >= Equipe.Joueurs.Length)
+            if (IndexJoueur >= Equipe.Joueurs.Length)
             {
                 IndexJoueur = 0;
             }
